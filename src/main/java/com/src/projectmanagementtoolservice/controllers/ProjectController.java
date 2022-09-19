@@ -25,7 +25,7 @@ public class ProjectController {
     ValidateErrorService validateErrorService;
 
     @PostMapping("/save")
-    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
+    public ResponseEntity<?> saveProject(@Valid @RequestBody Project project, BindingResult result) {
 
         ResponseEntity<?> errorMap = validateErrorService.mapValidationError(result);
         if(errorMap != null) {
