@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/project")
@@ -22,7 +19,7 @@ public class ProjectController {
     private ProjectService projectService;
 
     @Autowired
-    ValidateErrorService validateErrorService;
+    private ValidateErrorService validateErrorService;
 
     @PostMapping("/save")
     public ResponseEntity<?> saveProject(@Valid @RequestBody Project project, BindingResult result) {
@@ -36,8 +33,8 @@ public class ProjectController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<?> findProjectById(@RequestParam String projectId) {
-        Project project = projectService.findProjectById(projectId);
+    public ResponseEntity<?> findProjectByID(@RequestParam String projectID) {
+        Project project = projectService.findProjectByID(projectID);
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 
@@ -47,8 +44,9 @@ public class ProjectController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteProjectById(@RequestParam String projectId) {
-        projectService.deleteProjectById(projectId);
-        return new ResponseEntity<String>("Project deleted Successfully with Id " + projectId, HttpStatus.OK);
+    public ResponseEntity<?> deleteProjectByID(@RequestParam String projectID) {
+        System.out.println();
+        projectService.deleteProjectByID(projectID);
+        return new ResponseEntity<String>("Project deleted Successfully with ID " + projectID, HttpStatus.OK);
     }
 }
