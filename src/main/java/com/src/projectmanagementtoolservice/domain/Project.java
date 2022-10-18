@@ -1,6 +1,7 @@
 package com.src.projectmanagementtoolservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -20,10 +21,14 @@ public class Project {
     @NotBlank(message = "Project ID is required")
     @Size(min = 5, max = 6, message = "Project ID should be between 5 to 6 length")
     @Column(updatable = false, unique = true)
-    private String projectId;
+    private String projectID;
 
     @NotBlank(message = "Project description can not be blank")
     private String projectDescription;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "project")
+    @JsonIgnore
+    private Backlog backlog;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
@@ -51,8 +56,8 @@ public class Project {
         return projectName;
     }
 
-    public String getProjectId() {
-        return projectId;
+    public String getProjectID() {
+        return projectID;
     }
 
     public String getProjectDescription() {
@@ -87,8 +92,8 @@ public class Project {
         this.projectName = projectName;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
     }
 
     public void setProjectDescription(String projectDescription) {
@@ -101,6 +106,34 @@ public class Project {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 
     @PrePersist
